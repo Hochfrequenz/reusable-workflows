@@ -12,6 +12,12 @@ on:
         required: true
         type: string
     secrets:
+      azure_client_id:
+        description: The Azure client ID to deploy to
+        required: true
+      azure_tenant_id:
+        description: The Azure tenant ID to deploy to
+        required: true
       azure_subscription_id:
         description: The Azure subscription ID to deploy to
         required: true
@@ -32,8 +38,8 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID_GITHUB_ACTION_OIDC }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          client-id: ${{ secrets.azure_client_id }}
+          tenant-id: ${{ secrets.azure_tenant_id }}
           subscription-id: ${{ secrets.azure_subscription_id }}
       - name: Deploy to Azure with Pulumi
         working-directory: pulumi
