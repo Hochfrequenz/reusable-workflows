@@ -26,7 +26,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Install Pulumi CLI
-        uses: pulumi/actions@v5
+        uses: pulumi/actions@v6
         with:
           pulumi-version: latest
       - name: Azure Login
