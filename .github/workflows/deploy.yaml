@@ -1,0 +1,45 @@
+name: Reusable deploy workflow
+
+on:
+  workflow_call:
+    inputs:
+      pulumi_stack_name:
+        description: The Pulumi stack to deploy to
+        required: true
+        type: string
+        default: dev
+      docker_tag:
+        description: The Docker tag to use for the deployment
+        required: true
+        type: string
+        default: latest
+      azure_subscription_id:
+        description: The Azure subscription ID to deploy to
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@v5
+        with:
+          pulumi-version: latest
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID_GITHUB_ACTION_OIDC }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ inputs.azure_subscription_id }}
+      - name: Deploy to Azure with Pulumi
+        working-directory: pulumi
+        run: |
+          pulumi login
+          pulumi stack select ${{ inputs.pulumi_stack_name }}
+          pulumi config set imageTag ${{ inputs.docker_tag }}
+          pulumi up --yes
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
