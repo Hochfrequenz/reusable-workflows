@@ -16,6 +16,9 @@ on:
         description: The Azure subscription ID to deploy to
         required: true
 
+permissions:
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
