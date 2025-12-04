@@ -13,10 +13,10 @@ on:
         required: true
         type: string
         default: latest
+    secrets:
       azure_subscription_id:
         description: The Azure subscription ID to deploy to
         required: true
-        type: string
 
 jobs:
   deploy:
@@ -33,7 +33,7 @@ jobs:
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID_GITHUB_ACTION_OIDC }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ inputs.azure_subscription_id }}
+          subscription-id: ${{ secrets.azure_subscription_id }}
       - name: Deploy to Azure with Pulumi
         working-directory: pulumi
         run: |
