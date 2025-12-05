@@ -21,6 +21,9 @@ on:
       azure_subscription_id:
         description: The Azure subscription ID to deploy to
         required: true
+      pulumi_access_token:
+        description: The Pulumi access token to deploy to
+        required: true
 
 permissions:
   id-token: write
