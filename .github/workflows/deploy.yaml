@@ -49,4 +49,4 @@ jobs:
           pulumi config set imageTag ${{ inputs.docker_tag }}
           pulumi up --yes
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ secrets.pulumi_access_token }}
