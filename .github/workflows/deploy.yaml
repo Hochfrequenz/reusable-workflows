@@ -21,6 +21,9 @@ on:
       azure_subscription_id:
         description: The Azure subscription ID to deploy to
         required: true
+      pulumi_access_token:
+        description: The Pulumi access token to deploy to
+        required: true
 
 permissions:
   id-token: write
@@ -49,4 +52,4 @@ jobs:
           pulumi config set imageTag ${{ inputs.docker_tag }}
           pulumi up --yes
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ secrets.pulumi_access_token }}
