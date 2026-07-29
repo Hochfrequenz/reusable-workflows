@@ -11,6 +11,11 @@ on:
         description: The Docker tag to use for the deployment
         required: true
         type: string
+      working_directory:
+        description: The directory containing the Pulumi project
+        required: false
+        type: string
+        default: pulumi
     secrets:
       azure_client_id:
         description: The Azure client ID to deploy to
@@ -45,7 +50,7 @@ jobs:
           tenant-id: ${{ secrets.azure_tenant_id }}
           subscription-id: ${{ secrets.azure_subscription_id }}
       - name: Deploy to Azure with Pulumi
-        working-directory: pulumi
+        working-directory: ${{ inputs.working_directory }}
         run: |
           pulumi login
           pulumi stack select ${{ inputs.pulumi_stack_name }}
