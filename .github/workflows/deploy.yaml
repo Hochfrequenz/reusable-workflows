@@ -12,10 +12,10 @@ on:
         required: true
         type: string
       working_directory:
-        description: The directory containing the Pulumi project
+        description: The directory containing the Pulumi (Node.js/TypeScript) project
         required: false
         type: string
-        default: pulumi
+        default: infra
     secrets:
       azure_client_id:
         description: The Azure client ID to deploy to
@@ -49,6 +49,9 @@ jobs:
           client-id: ${{ secrets.azure_client_id }}
           tenant-id: ${{ secrets.azure_tenant_id }}
           subscription-id: ${{ secrets.azure_subscription_id }}
+      - name: Install Pulumi project dependencies
+        working-directory: ${{ inputs.working_directory }}
+        run: pulumi install
       - name: Deploy to Azure with Pulumi
         working-directory: ${{ inputs.working_directory }}
         run: |
