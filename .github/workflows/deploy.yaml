@@ -12,10 +12,10 @@ on:
         required: true
         type: string
       working_directory:
-        description: The directory containing the Pulumi project
+        description: The directory containing the Pulumi (Node.js/TypeScript) project
         required: false
         type: string
-        default: pulumi
+        default: infra
     secrets:
       azure_client_id:
         description: The Azure client ID to deploy to
